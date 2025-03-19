@@ -1,0 +1,63 @@
+[
+{
+  "model": "api.city",
+  "pk": 1,
+  "fields": {
+    "name": "Zhytomyr",
+    "slug": "None"
+  }
+},
+{
+  "model": "api.city",
+  "pk": 2,
+  "fields": {
+    "name": "Київ",
+    "slug": "kiev"
+  }
+},
+{
+  "model": "api.city",
+  "pk": 3,
+  "fields": {
+    "name": "Lviv",
+    "slug": "lviv"
+  }
+},
+{
+  "model": "api.city",
+  "pk": 4,
+  "fields": {
+    "name": "Lvov",
+    "slug": "lvov"
+  }
+},
+{
+  "model": "api.proglanguage",
+  "pk": 1,
+  "fields": {
+    "name": "Python",
+    "slug": ""
+  }
+},
+{
+  "model": "api.proglanguage",
+  "pk": 2,
+  "fields": {
+    "name": "Java",
+    "slug": "java"
+  }
+},
+{
+  "model": "api.vacancy",
+  "pk": 1,
+  "fields": {
+    "url": "https://www.work.ua/jobs/5849706/",
+    "title": "Junior Linux Administration/DevOps Engineer",
+    "company_name": "Nix",
+    "description": "NIX у пошуках Linux Administration/DevOps в команду однодумців. Серед найцікавіших завдань — розробка та реалізація кластерних та високодоступних систем для сайтів та пошти, автоматизація конфігурації серверів та інфраструктури, робота з Cloud-сервісами та віртуалізацією.",
+    "city": 3,
+    "programming_language": 1,
+    "timestamp": "2025-03-03"
+  }
+}
+]
