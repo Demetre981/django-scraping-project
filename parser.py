@@ -1,14 +1,23 @@
+from random import randint
 import re
 import requests
 import codecs
 from bs4 import BeautifulSoup as BS
 
-headers = {"User-Agent": "Mozilla/5.0 (Windows NT 5.1; rv:47.0) Gecko/20100101 Firefox/47.0",
-           "Accept": "text/html,application/xhtml+xml,application/xm1;q=0.9,*/*;q=0.8"}
+__all__ = ("work", "dou", "djinni")
+
+headers = [
+    {'User-Agent': 'Mozilla/5.0 (Windows NT 5.1; rv:47.0) Gecko/20100101 Firefox/47.0',
+        'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'},
+    {'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
+        'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'},
+    {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0',
+        'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'}
+    ]
 
 def work(url):
     domain = "https://www.work.ua"
-    resp = requests.get(url, headers=headers)
+    resp = requests.get(url, headers=headers[randint(0,2)])
     jobs = []
     errors = []
     if resp.status_code == 200:
@@ -26,7 +35,7 @@ def work(url):
                     company = logo['alt']
 
                 jobs.append({"title": title.text, "url": domain + href, 
-                            "description": content, "company": company})
+                            "description": content, "company_name": company})
         else:
             errors.append({"url": url, "title": "MainDiv does not exist"})
 
@@ -38,9 +47,10 @@ def work(url):
 
 def dou(url):
     # domain = "https://www.work.ua"
-    resp = requests.get(url, headers=headers)
+    resp = requests.get(url, headers=headers[randint(0,2)])
     jobs = []
     errors = []
+    
     if resp.status_code == 200:
         soup = BS(resp.content, "html.parser")
         main_div = soup.find("div", attrs={"id": "vacancyListId"})
@@ -58,7 +68,7 @@ def dou(url):
                         company = a.text
 
                     jobs.append({"title": title.text, "url": href, 
-                                "description": content, "company": company})
+                                "description": content, "company_name": company})
         else:
             errors.append({"url": url, "title": "MainDiv does not exist"})
 
@@ -69,7 +79,7 @@ def dou(url):
 
 def djinni(url):
     domain = "https://djinni.co"
-    resp = requests.get(url, headers=headers)
+    resp = requests.get(url, headers=headers[randint(0,2)])
     jobs = []
     errors = []
     if resp.status_code == 200:
@@ -96,7 +106,7 @@ def djinni(url):
                     company = comp.text
 
                 jobs.append({"title": title, "url": domain + href, 
-                                "description": content, "company": company})
+                                "description": content, "company_name": company})
         else:
             errors.append({"url": url, "title": "MainDiv does not exist"})
 
@@ -145,6 +155,7 @@ def djinni(url):
 if __name__ == "__main__":
     url = "https://djinni.co/jobs/?primary_keyword=Python&region=UKR&location=kyiv"
     jobs, errors = djinni(url)
+    
     h = codecs.open("work.txt", "w", "utf-8")
     h.write(str(jobs))
     h.close
